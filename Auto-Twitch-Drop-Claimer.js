@@ -1,19 +1,19 @@
 // ==UserScript==
 // @name           Auto Twitch Drop Claimer
 // @name:tr        Otomatik Twitch Drop Alıcı
-// @namespace      https://github.com/hhhhh-ckr/Auto-Twitch-Drop-Claimer
-// @version        1.0.0
+// @namespace      https://github.com/Arcdashckr/Auto-Twitch-Drop-Claimer
+// @version        1.0.1
 // @description    Auto clicking "Click to claim" in inventory page
 // @description:tr Drop Envanteri sayfasında "Şimdi Al" tuşuna otomatik tıklar
-// @author         hhhhh_ckr
+// @author         Arcdashckr
 // @match          https://www.twitch.tv/drops/inventory*
 // @run-at         document-end
 // @icon           https://cdn.simpleicons.org/twitch/9146FF
 // @grant          none
 // @license        MIT
-// @updateURL      https://github.com/hhhhh-ckr/Auto-Twitch-Drop-Claimer/raw/main/Auto-Twitch-Drop-Claimer.js
-// @downloadURL    https://github.com/hhhhh-ckr/Auto-Twitch-Drop-Claimer/raw/main/Auto-Twitch-Drop-Claimer.js
-// @supportURL     https://github.com/hhhhh-ckr/Auto-Twitch-Drop-Claimer/issues
+// @updateURL      https://github.com/Arcdashckr/Auto-Twitch-Drop-Claimer/raw/main/Auto-Twitch-Drop-Claimer.js
+// @downloadURL    https://github.com/Arcdashckr/Auto-Twitch-Drop-Claimer/raw/main/Auto-Twitch-Drop-Claimer.js
+// @supportURL     https://github.com/Arcdashckr/Auto-Twitch-Drop-Claimer/issues
 // ==/UserScript==
 
 // Credits: https://greasyfork.org/tr/scripts/420346-auto-claim-twitch-drop
