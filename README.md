@@ -33,10 +33,7 @@ To keep your session fresh, the script also reloads the inventory page every **5
 
 #### 💡 Notes
 - You can adjust the `refreshMinute` value in the code to change how often the page reloads.
-- Works only on Twitch’s Drops Inventory page.  
-- When you open the drop inventory page, it may be necessary to refresh at least once. </br>
-  Make you sure script is enabled on your userscript manager </br>
-  <img width=auto alt="image" src="https://github.com/user-attachments/assets/99c4935d-d042-4a05-8bff-4953c8e3f599" />
+- Works only on Twitch’s Drops Inventory page.
 
 </br>
 
