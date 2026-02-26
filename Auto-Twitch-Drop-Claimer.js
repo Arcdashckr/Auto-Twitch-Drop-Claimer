@@ -2,11 +2,11 @@
 // @name           Auto Twitch Drop Claimer
 // @name:tr        Otomatik Twitch Drop Alıcı
 // @namespace      https://github.com/Arcdashckr/Auto-Twitch-Drop-Claimer
-// @version        1.0.1
+// @version        1.0.2
 // @description    Auto clicking "Click to claim" in inventory page
 // @description:tr Drop Envanteri sayfasında "Şimdi Al" tuşuna otomatik tıklar
 // @author         Arcdashckr
-// @match          https://www.twitch.tv/drops/inventory*
+// @match          https://www.twitch.tv/*
 // @run-at         document-end
 // @icon           https://cdn.simpleicons.org/twitch/9146FF
 // @grant          none
@@ -31,7 +31,12 @@ function getElementByXPath(xpath) {
   ).singleNodeValue;
 }
 
+function isInventoryPage() {
+  return window.location.href.includes("/drops/inventory");
+}
+
 var onMutate = function(mutationsList) {
+  if (!isInventoryPage()) return;
   mutationsList.forEach(mutation => {
     const button = getElementByXPath(claimButtonXPath);
     if (button) button.click();
@@ -41,6 +46,8 @@ var onMutate = function(mutationsList) {
 var observer = new MutationObserver(onMutate);
 observer.observe(document.body, {childList: true, subtree: true});
 
-setInterval(function() {
-                  window.location.reload();
-                }, refreshMinute * 60 * 1000);
+if (isInventoryPage()) {
+  setInterval(function() {
+    window.location.reload();
+  }, refreshMinute * 60 * 1000);
+}
