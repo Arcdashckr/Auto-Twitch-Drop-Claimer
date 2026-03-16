@@ -2,7 +2,7 @@
 // @name           Auto Twitch Drop Claimer
 // @name:tr        Otomatik Twitch Drop Alıcı
 // @namespace      https://github.com/Arcdashckr/Auto-Twitch-Drop-Claimer
-// @version        1.0.2
+// @version        1.0.3
 // @description    Auto clicking "Click to claim" in inventory page
 // @description:tr Drop Envanteri sayfasında "Şimdi Al" tuşuna otomatik tıklar
 // @author         Arcdashckr
@@ -20,34 +20,63 @@
 
 const claimButtonXPath = '//div[contains(@class, "inventory-max-width")]//button[contains(@class, "ScCoreButton-sc")]';
 const refreshMinute = 5;
+let refreshTimer = null;
+let lastLog = "";
+
+function log(message, type = "INFO") {
+    if (lastLog === message) return;
+    lastLog = message;
+
+    const styles = {
+        INFO: "color: #9146FF; font-weight: bold;",
+        SUCCESS: "color: #00FF7F; font-weight: bold;",
+        WARN: "color: #FFD700; font-weight: bold;",
+        SYSTEM: "background: #9146FF; color: white; padding: 2px 5px; border-radius: 3px;"
+    };
+
+    console.log(`%c[Auto-Twitch-Drop-Claimer][${type}]%c ${message}`, styles.SYSTEM, styles[type]);
+}
 
 function getElementByXPath(xpath) {
-  return document.evaluate(
-    xpath,
-    document,
-    null,
-    XPathResult.FIRST_ORDERED_NODE_TYPE,
-    null
-  ).singleNodeValue;
+    return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
 function isInventoryPage() {
-  return window.location.href.includes("/drops/inventory");
+    return window.location.href.includes("/drops/inventory");
 }
 
-var onMutate = function(mutationsList) {
-  if (!isInventoryPage()) return;
-  mutationsList.forEach(mutation => {
-    const button = getElementByXPath(claimButtonXPath);
-    if (button) button.click();
-  });
+function handleRefresh() {
+    if (isInventoryPage()) {
+        if (!refreshTimer) {
+            log(`Inventory page detected. Refresing in a ${refreshMinute} minutes.`, "INFO");
+            refreshTimer = setInterval(() => {
+                log("Page reloading...", "WARN");
+                window.location.reload();
+            }, refreshMinute * 60 * 1000);
+        }
+    } else {
+        if (refreshTimer) {
+            log("Inventory page closed, timer stopped.", "WARN");
+            clearInterval(refreshTimer);
+            refreshTimer = null;
+        }
+    }
+}
+
+const onMutate = function() {
+    if (isInventoryPage()) {
+        const button = getElementByXPath(claimButtonXPath);
+        if (button) {
+            log("Drop founded! Clicking claim button...", "SUCCESS");
+            button.click();
+            lastLog = "";
+        }
+    }
+    handleRefresh();
 };
 
-var observer = new MutationObserver(onMutate);
-observer.observe(document.body, {childList: true, subtree: true});
+const observer = new MutationObserver(onMutate);
+observer.observe(document.body, { childList: true, subtree: true });
 
-if (isInventoryPage()) {
-  setInterval(function() {
-    window.location.reload();
-  }, refreshMinute * 60 * 1000);
-}
+log("Script initialized, watching inventory page...", "INFO");
+handleRefresh();
